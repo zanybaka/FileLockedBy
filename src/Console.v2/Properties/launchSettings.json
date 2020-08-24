@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Console.v2": {
+      "commandName": "Project",
+      "commandLineArgs": "register"
+    }
+  }
+}
