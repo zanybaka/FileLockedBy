@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>FileLockedBy2</AssemblyName>
     <RootNamespace>FileLockedBy</RootNamespace>
-    <ApplicationIcon>unlock-128.ico</ApplicationIcon>
+    <ApplicationIcon>unlock-64.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

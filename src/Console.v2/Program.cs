@@ -64,12 +64,14 @@ namespace FileLockedBy
                     int handleCount = information.Count;
                     var process = Process.GetProcessById(info.Process.dwProcessId);
                     var infoEnumerator = ProcessHelper.GetCurrentProcessOpenFilesEnumerator(info.Process.dwProcessId, sptr, handleCount);
-                    while (infoEnumerator.MoveNext())
+                    bool skip = false;
+                    while (infoEnumerator.MoveNext() && !skip)
                     {
                         FileHandleInfo current = infoEnumerator.Current;
                         if (string.Compare(path, current.FileSystemInfo.FullName, StringComparison.OrdinalIgnoreCase) != 0) continue;
                         Console.WriteLine($"Found! {process.ProcessName} -> {process.MainModule.FileName}");
                         found = true;
+                        skip = true;
                         var result = ProcessHelper.CloseHandle(process, current, currentProcess);
                         Console.WriteLine(result == 0 ? "Success." : $"Error: {Enum.GetName(typeof(Error), result)}");
                     }

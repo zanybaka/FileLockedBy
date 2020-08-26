@@ -13,7 +13,9 @@ namespace FileLockedBy.Registry
                 throw new NotSupportedException("The platform is not supported.");
             }
 
-            RegistryKey shell = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Classes\\*\\shell", writable: true);
+            RegistryKey classes = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Classes", writable: true);
+            RegistryKey asterisk = classes.OpenSubKey("*", writable: true) ?? classes.CreateSubKey("*");
+            RegistryKey shell = asterisk.OpenSubKey("shell", writable: true) ?? asterisk.CreateSubKey("shell");
             RegistryKey unlock = shell.CreateSubKey(app, writable: true);
             unlock.SetValue("Icon", $"\"{path}\"");
             RegistryKey command = unlock.CreateSubKey("command");
