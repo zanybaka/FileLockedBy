@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FileLockedBy.Win32.System;
 
 namespace FileLockedBy
@@ -7,7 +8,7 @@ namespace FileLockedBy
     {
         private static uint MAX_LOCK_PROCESS_COUNT = 10;
 
-        public static RM_PROCESS_INFO[] FindLockerProcesses(string path)
+        public static RM_PROCESS_INFO[] FindLockerProcesses(string[] files)
         {
             int handle;
             if (RestartManagerNativeMethods.RmStartSession(out handle, 0, strSessionKey: Guid.NewGuid().ToString()) != RmResult.ERROR_SUCCESS)
@@ -15,7 +16,7 @@ namespace FileLockedBy
 
             try
             {
-                string[] resources = { path };
+                string[] resources = files.ToArray();
 
                 if (RestartManagerNativeMethods.RmRegisterResources(handle, (uint)resources.LongLength, resources, 0, null, 0, null) != RmResult.ERROR_SUCCESS)
                     throw new Exception("Could not register resource.");

@@ -1,0 +1,4 @@
+﻿Use Publish in VS to publish a new .exe
+
+TODO:
+Setup as a dotnet tool
